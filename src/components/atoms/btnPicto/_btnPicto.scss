@@ -1,0 +1,23 @@
+.btn_picto_container {
+	display: inline-flex;
+	max-width: 50px;
+	max-height: 50px;
+	& > .btn_picto {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: 0.3s ease-out;
+		transform: scale(1);
+		transform-origin: 50% 50%;
+		&:hover {
+			transition: 0.3s ease-out;
+			transform: scale(0.94);
+			transform-origin: 50% 50%;
+		}
+		cursor: pointer;
+		& > img {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}
