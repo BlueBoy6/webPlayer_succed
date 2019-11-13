@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { store } from './store/storeRepo';
+import { store } from './store/reducers/index';
 import VideoPlayer from './components/organisms/videoPlayer/videoPlayer';
 
 import './style/globalStyle.scss';

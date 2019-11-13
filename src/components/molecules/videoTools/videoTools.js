@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BtnPicto from '../../atoms/btnPicto/btnPicto';
 
 export default function VideoTools({
-	play,
-	pause,
+	playPause,
+	playPauseEvent,
 	forward,
 	rewind,
+	seekBarMax,
+	seekingBarEvent,
+	currentTime,
 	fullscreen
 }) {
-	const [playState, setPlayState] = useState(false);
-
 	// handle play
-	const playVideo = () => setPlayState(!playState);
+	const playVideo = () => {
+		playPauseEvent();
+	};
 
 	// handle forward event
 	const advanceVideo = () => forward();
@@ -20,12 +23,25 @@ export default function VideoTools({
 	// handle fullscreen event
 	const fullScreenVideo = () => fullscreen();
 
+	const handleSeekingTime = e => {
+		seekingBarEvent(e.target.value);
+	};
+
 	// toggler of name and picto of button
 	const playerLabel = playerstate => (playerstate ? 'pause' : 'play');
 
 	return (
 		<div className='tool_bar_video_container'>
 			<div className='tool_bar_video'>
+				<div className='seekBar'>
+					<input
+						onChange={handleSeekingTime}
+						value={currentTime}
+						type='range'
+						min='0'
+						max={seekBarMax}
+					/>
+				</div>
 				<div className='left_container'>
 					<BtnPicto
 						pictoName='rewind'
@@ -33,9 +49,9 @@ export default function VideoTools({
 						label='turn back video'
 					/>
 					<BtnPicto
-						pictoName={playerLabel(playState)}
+						pictoName={playerLabel(playPause)}
 						clickCallBack={playVideo}
-						label={`${playerLabel(playState)} video`}
+						label={`${playerLabel(playPause)} video`}
 					/>
 					<BtnPicto
 						pictoName='forward'

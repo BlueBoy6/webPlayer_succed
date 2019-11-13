@@ -4,9 +4,16 @@
 	justify-content: center;
 	width: 100vw;
 	height: 100vh;
+	overflow: hidden;
 	& > .video_container {
+		background: #141414;
 		width: 100%;
 		height: 100%;
+		& > video {
+			width: 100%;
+			height: 100%;
+			object-fit: contain;
+		}
 	}
 	& > .tool_bar_video_container {
 		position: absolute;
