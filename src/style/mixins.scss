@@ -1,0 +1,56 @@
+// ==================================================
+// FUNCTIONNAL MIXINS
+// ==================================================
+$breakpoints: (
+    "phone": 250px,
+    "phonemax": 767px,
+	"tablet": 768px,
+	"tabletmax": 1023px,
+	"laptop": 1024px,
+	"laptopmax": 1279px,
+    "desktop": 1280px,
+);
+@mixin media-min($_key){
+    @media screen and (min-width: map-get($breakpoints, $_key)) {
+        @content;
+    }
+}
+@mixin media-max($_key){
+    @media screen and (max-width: map-get($breakpoints, $_key)) {
+        @content;
+    }
+}
+@mixin media-min-max($key1, $key2){
+    @media screen and (min-width: map-get($breakpoints, $key1)) and (max-width: map-get($breakpoints, $key2)){
+        @content;
+    }
+}
+
+@mixin staggeredTransition($keyStart, $keyMax){
+	@for $i from $keyStart through $keyMax {
+		&:nth-child(#{$i}){
+			@content;
+			@if($i == 1){
+				transition-delay: 0.1s;
+			}
+			@if($i == 2){
+				transition-delay: 0.2s;
+			}
+			@if($i == 3){
+				transition-delay: 0.3s;
+			}
+			@if($i == 4){
+				transition-delay: 0.4s;
+			}
+			@if($i == 5){
+				transition-delay: 0.5s;
+			}
+			@if($i == 6){
+				transition-delay: 0.6s;
+			}
+			@if($i == 7){
+				transition-delay: 0.7s;
+			}
+		}
+	}
+}

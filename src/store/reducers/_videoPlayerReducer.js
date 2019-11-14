@@ -1,9 +1,10 @@
-import { PLAY_PAUSE_VIDEO, CHANGE_VIDEO } from '../actions/types';
+import { PLAY_PAUSE_VIDEO, CHANGE_VIDEO, VOLUME_CHANGE_VIDEO } from '../actions/types';
 
 const initialState = {
 	currentVideoState: {
 		playing: false,
-		timer: 0
+		timer: 0,
+		volume: 0
 	},
 	currentVideo: {
 		title: 'Feel the nature',
@@ -39,9 +40,18 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
+	console.log('state', state)
 	switch (action.type) {
 		case CHANGE_VIDEO:
 			return { ...state, currentVideo: action.payload };
+		case VOLUME_CHANGE_VIDEO:
+			return {
+				...state,
+				currentVideoState: {
+					...state.currentVideoState,
+					volume: action.payload
+				}
+			};
 		case PLAY_PAUSE_VIDEO:
 			return {
 				...state,
