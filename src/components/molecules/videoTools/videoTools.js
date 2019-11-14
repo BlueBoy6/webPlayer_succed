@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import VolumeRange from '../../atoms/volumeRange/volumeRange';
 import BtnPicto from '../../atoms/btnPicto/btnPicto';
+import { smoothVideo, getPercentUnit } from '../../../helpers/helpers';
 
 export default function VideoTools({
 	playPause,
@@ -9,8 +11,12 @@ export default function VideoTools({
 	seekBarMax,
 	seekingBarEvent,
 	currentTime,
-	fullscreen
+	fullscreen,
+	volumeChangeEvent
 }) {
+
+
+
 	// handle play
 	const playVideo = () => {
 		playPauseEvent();
@@ -24,20 +30,27 @@ export default function VideoTools({
 	const fullScreenVideo = () => fullscreen();
 
 	const handleSeekingTime = e => {
-		seekingBarEvent(e.target.value);
+		seekingBarEvent(Number(e.target.value));
 	};
+
+	const seekValue = (currTime) =>  smoothVideo('player', currTime);
+	const percent = (currTime) => getPercentUnit(seekValue(currTime), seekBarMax)
+	const changeVolumeEvent = (e) => volumeChangeEvent(e);
 
 	// toggler of name and picto of button
 	const playerLabel = playerstate => (playerstate ? 'pause' : 'play');
+
 
 	return (
 		<div className='tool_bar_video_container'>
 			<div className='tool_bar_video'>
 				<div className='seekBar'>
+					<span className="progressBar" style={{width: `${percent(currentTime)}%`}}/>
 					<input
 						onChange={handleSeekingTime}
-						value={currentTime}
+						value={seekValue(currentTime)}
 						type='range'
+						step="0.1"
 						min='0'
 						max={seekBarMax}
 					/>
@@ -58,6 +71,7 @@ export default function VideoTools({
 						clickCallBack={advanceVideo}
 						label='play video'
 					/>
+					<VolumeRange volumeChangeEvent={changeVolumeEvent} />
 				</div>
 				<div className='right_container'>
 					<BtnPicto

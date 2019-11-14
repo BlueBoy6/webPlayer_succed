@@ -1,0 +1,53 @@
+.volumeRange_container{
+	position: relative;
+	max-width: 100px;
+	overflow: hidden;
+	height: 40px;
+	min-width: 80px;
+	.volumeBar{
+		display: flex;
+		width: 80px;
+		position: relative;
+		z-index: 2;
+		min-width: 80px;
+	}
+	.volumeBar_hider{
+		position: absolute;
+		border-left: 40px solid #141414;
+		border-top: 20px solid #141414;
+		border-right: 40px solid transparent;
+		border-bottom: 20px solid transparent;
+		width: 80px;
+		height: 40px;
+		box-sizing: border-box;
+		z-index: 6;
+		pointer-events: none;
+	}
+	&>input[type="range"]{
+		width: 100%;
+		appearance: none;
+		background: transparent;
+		position: absolute;
+		margin: 0;
+		min-width: 80px;
+		height: 40px;
+		top: 0;
+		cursor: pointer;
+		pointer-events: auto;
+		box-shadow: 10px -5px 12px -7px rgba(52, 232, 158, 0.8) inset;
+		&::-moz-range-thumb{
+			appearance: none;
+			background: rgb(52, 232, 158);
+			border: none;
+			border-radius: 0px;
+			width: 1px;
+			height: 40px;
+			position: relative;
+			z-index: 9;
+		}
+		&::-moz-range-progress {
+			height: 40px;
+			background: rgb(52, 232, 158);
+		}
+	}
+}

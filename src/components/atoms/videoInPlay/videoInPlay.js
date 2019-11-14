@@ -1,17 +1,37 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import {smoothVideo} from '../../../helpers/helpers';
 
 export default function VideoInPlay({
 	src,
+	playPause,
 	clickEvent,
 	timeEvent,
 	loadedVideoEvent,
-	newtimePosition
+	newTimePosition,
+	volumeChange
 }) {
+
+	const [newTimePositionState, setNewTimePosition] = useState(0)
+	// const [volume, setVolume] = useState(0)
 	const videoRef = useRef();
 
-	useEffect(() => {
-		videoRef.current.currentTime = newtimePosition;
-	}, [newtimePosition]);
+	if(videoRef.current){
+		// Play/Pause event manager from parent
+		if(playPause === true){
+			videoRef.current.play()
+		}else{
+			videoRef.current.pause()
+		}
+
+		// Seeking event local manager 
+		if (newTimePositionState !== newTimePosition) {
+			const timeToPlay = newTimePosition;
+			videoRef.current.currentTime = timeToPlay;
+			setNewTimePosition(timeToPlay);
+		}
+
+		videoRef.current.volume = volumeChange / 100;
+	}
 
 	const handleClick = e => {
 		if (videoRef.current.paused) {
@@ -29,10 +49,11 @@ export default function VideoInPlay({
 	};
 	const handleLoaded = e => {
 		const videoInformations = {
-			duration: Number(videoRef.current.duration)
+			duration: smoothVideo('player', videoRef.current.duration)
 		};
 		loadedVideoEvent(videoInformations);
 	};
+
 
 	return (
 		<div className='video_container'>
