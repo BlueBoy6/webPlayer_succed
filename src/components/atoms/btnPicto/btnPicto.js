@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function BtnPicto({ pictoName, clickCallBack, label }) {
+
 	function pictoSetter(picto) {
 		switch (picto) {
 			case 'play':
@@ -22,17 +23,22 @@ export default function BtnPicto({ pictoName, clickCallBack, label }) {
 	// handle click event and launch callback here
 	const handleClick = e => clickCallBack(e);
 
-	return (
-		<div className='btn_picto_container'>
-			<div className='btn_picto' onClick={handleClick}>
-				<img src={pictoSetter(pictoName)} alt={label} className='picto' />
+	if(pictoName !== undefined || pictoName.length !== 0){
+		return (
+			<div className='btn_picto_container'>
+				<div className='btn_picto' onClick={handleClick}>
+					<img src={pictoSetter(pictoName)} alt={label} className='picto' />
+					{label ? label : ''}
+				</div>
 			</div>
-		</div>
-	);
+		);
+	}else{
+		return(<></>)
+	}
 }
 
 BtnPicto.propTypes = {
 	pictoName: PropTypes.string.isRequired,
-	label: PropTypes.string,
-	clickCallBack: PropTypes.func
+	clickCallBack: PropTypes.func,
+	label: PropTypes.string
 };
