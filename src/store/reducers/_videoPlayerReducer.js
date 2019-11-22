@@ -1,10 +1,11 @@
-import { PLAY_PAUSE_VIDEO, CHANGE_VIDEO, VOLUME_CHANGE_VIDEO } from '../actions/types';
+import { PLAY_PAUSE_VIDEO, CHANGE_VIDEO, VOLUME_CHANGE_VIDEO, TOGGLE_FULLSCREEN_VIDEO } from '../actions/types';
 
 const initialState = {
 	currentVideoState: {
 		playing: false,
 		timer: 0,
-		volume: 0
+		volume: 0,
+		fullScreen: false
 	},
 	currentVideo: {
 		title: 'Feel the nature',
@@ -44,6 +45,8 @@ export default function(state = initialState, action) {
 	switch (action.type) {
 		case CHANGE_VIDEO:
 			return { ...state, currentVideo: action.payload };
+		case TOGGLE_FULLSCREEN_VIDEO:
+			return { ...state, currentVideoState : {...state.currentVideoState, fullScreen: !action.payload} };
 		case VOLUME_CHANGE_VIDEO:
 			return {
 				...state,

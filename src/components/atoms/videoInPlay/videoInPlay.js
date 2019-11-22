@@ -1,5 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
-import {smoothVideo} from '../../../helpers/helpers';
+import React, { useRef, useState } from 'react';
 
 export default function VideoInPlay({
 	src,
@@ -8,11 +7,11 @@ export default function VideoInPlay({
 	timeEvent,
 	loadedVideoEvent,
 	newTimePosition,
-	volumeChange
+	volumeChange,
 }) {
 
 	const [newTimePositionState, setNewTimePosition] = useState(0)
-	// const [volume, setVolume] = useState(0)
+
 	const videoRef = useRef();
 
 	if(videoRef.current){
@@ -31,6 +30,7 @@ export default function VideoInPlay({
 		}
 
 		videoRef.current.volume = volumeChange / 100;
+
 	}
 
 	const handleClick = e => {
@@ -47,9 +47,10 @@ export default function VideoInPlay({
 		const currentTime = e.target.currentTime;
 		return timeEvent(currentTime);
 	};
+
 	const handleLoaded = e => {
 		const videoInformations = {
-			duration: smoothVideo('player', videoRef.current.duration)
+			duration: videoRef.current.duration
 		};
 		loadedVideoEvent(videoInformations);
 	};

@@ -38,5 +38,4 @@ describe('<BtnPicto/> Component', () =>{
 	it('#6 : Nothing rended if pictoName is not rended', () => {
 		expect(wrapper.find('.btn_picto_container img').prop('src')).toEqual('/pictos/play.png');
 	});
-
 });

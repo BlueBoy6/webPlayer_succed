@@ -1,4 +1,5 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import videoPlayer from './_videoPlayerReducer';
 
 // state and actions combiner
@@ -7,4 +8,4 @@ export const allReducers = combineReducers({
 });
 
 // initialize store
-export const store = createStore(allReducers);
+export const store = createStore(allReducers, applyMiddleware(thunk));

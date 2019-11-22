@@ -10,7 +10,6 @@ export default function VolumeRange({volumeChangeEvent}) {
 
 	return (
 		<div className="volumeRange_container">
-			<span className="volumeBar_hider"/>
 			<input
 				type='range'
 				step="0.1"
