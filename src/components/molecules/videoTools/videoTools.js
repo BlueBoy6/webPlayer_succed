@@ -6,17 +6,14 @@ import { getPercentUnit } from '../../../helpers/helpers';
 export default function VideoTools({
 	playPause,
 	playPauseEvent,
-	forward,
-	rewind,
 	seekBarMax,
 	seekingBarEvent,
 	currentTime,
 	fullScreenEvent,
-	volumeChangeEvent
+	fullscreen,
+	volumeChangeEvent,
+	isShowed
 }) {
-
-
-
 	// handle play
 	const playVideo = () => {
 		playPauseEvent();
@@ -30,23 +27,27 @@ export default function VideoTools({
 		seekingBarEvent(Number(e.target.value));
 	};
 
-	const percent = (currTime) => getPercentUnit(currTime, seekBarMax)
-	const changeVolumeEvent = (e) => volumeChangeEvent(e);
+	const seekValue = currTime => currTime;
+	const percent = currTime => getPercentUnit(seekValue(currTime), seekBarMax);
+	const changeVolumeEvent = e => volumeChangeEvent(e);
 
 	// toggler of name and picto of button
 	const playerLabel = playerstate => (playerstate ? 'pause' : 'play');
-
-
+	console.log('isShowed : ', isShowed);
 	return (
-		<div className='tool_bar_video_container'>
+		<div
+			className={`tool_bar_video_container ${isShowed ? 'show' : 'hidden'}`}>
 			<div className='tool_bar_video'>
 				<div className='seekBar'>
-					<span className="progressBar" style={{width: `${percent(currentTime)}%`}}/>
+					<span
+						className='progressBar'
+						style={{ width: `${percent(currentTime)}%` }}
+					/>
 					<input
 						onChange={handleSeekingTime}
 						value={currentTime}
 						type='range'
-						step="0.1"
+						step='0.1'
 						min='0'
 						max={seekBarMax}
 					/>
@@ -55,6 +56,7 @@ export default function VideoTools({
 					<BtnPicto
 						pictoName={playerLabel(playPause)}
 						clickCallBack={playVideo}
+						alt={`${playerLabel(playPause)} video`}
 					/>
 					<VolumeRange volumeChangeEvent={changeVolumeEvent} />
 				</div>
@@ -62,6 +64,7 @@ export default function VideoTools({
 					<BtnPicto
 						pictoName='fullscreen'
 						clickCallBack={fullScreenVideo}
+						alt='fullscreen'
 					/>
 				</div>
 			</div>

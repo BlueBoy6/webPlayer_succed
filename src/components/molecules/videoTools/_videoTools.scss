@@ -4,6 +4,14 @@
 	max-width: 80%;
 	min-height: 90px;
 	z-index: 5;
+	&.show {
+		opacity: 1;
+		transition: 0.3s;
+	}
+	&.hidden {
+		opacity: 0;
+		transition: 0.3s;
+	}
 	&:after {
 		content: '';
 		width: 100%;
@@ -33,19 +41,23 @@
 		& > * {
 			display: flex;
 		}
-		& > .seekBar{
+		& > .seekBar {
 			position: absolute;
 			top: 0;
 			width: 100%;
 			left: 0;
-			&>.progressBar{
+			& > .progressBar {
 				position: absolute;
 				height: 10px;
 				z-index: 1;
 				border-radius: 8px 0 0 0;
-				background: linear-gradient(to right, rgb(52, 232, 158), rgb(15, 52, 67));
+				background: linear-gradient(
+					to right,
+					rgb(52, 232, 158),
+					rgb(15, 52, 67)
+				);
 			}
-			&>input[type="range"]{
+			& > input[type='range'] {
 				width: 100%;
 				appearance: none;
 				border: none;
@@ -55,7 +67,7 @@
 				position: relative;
 				z-index: 2;
 				cursor: pointer;
-				box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.2);
+				box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
 				&::-webkit-slider-thumb {
 					width: 40px;
 					-webkit-appearance: none;
@@ -67,7 +79,7 @@
 					transition: box-shadow 0.2s ease-in-out;
 					position: relative;
 				}
-				&::-moz-range-thumb{
+				&::-moz-range-thumb {
 					appearance: none;
 					background: rgb(52, 232, 158);
 					border: none;

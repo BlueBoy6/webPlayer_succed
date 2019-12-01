@@ -1,4 +1,9 @@
-import { CHANGE_VIDEO, PLAY_PAUSE_VIDEO, VOLUME_CHANGE_VIDEO, TOGGLE_FULLSCREEN_VIDEO } from "./types";
+import {
+	CHANGE_VIDEO,
+	PLAY_PAUSE,
+	VOLUME_CHANGE,
+	TOGGLE_FULLSCREEN
+} from './types';
 
 export const changeCurrentVideo = video => {
 	return {
@@ -6,21 +11,21 @@ export const changeCurrentVideo = video => {
 		payload: video
 	};
 };
-export const playVideo = (playpause) => {
+export const playVideo = playpause => {
 	return {
-		type: PLAY_PAUSE_VIDEO,
+		type: PLAY_PAUSE,
 		payload: playpause
 	};
 };
-export const changeVolume = (volume) => {
+export const changeVolume = volume => {
 	return {
-		type: VOLUME_CHANGE_VIDEO,
+		type: VOLUME_CHANGE,
 		payload: volume
 	};
 };
-export const toggleFullScreen = (state) => {
+export const toggleFullScreen = state => {
 	return {
-		type: TOGGLE_FULLSCREEN_VIDEO,
+		type: TOGGLE_FULLSCREEN,
 		payload: state
 	};
 };

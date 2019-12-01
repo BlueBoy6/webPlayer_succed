@@ -12,80 +12,89 @@ import {
 } from '../../../store/actions/videoActions';
 
 function VideoPlayer(props) {
-
-	const playerRef = useRef()
+	const playerRef = useRef();
 
 	const [videoInPlayInfos, setVideoInPlayInfos] = useState({});
 	const [timePlayer, setTimePlayer] = useState(0);
 	const [newTimePlayer, setNewTimePlayer] = useState(0);
+	const [isShowedVideoTool, setShowVideoTool] = useState(true);
+	const [isMouseMoving, setMouseMovingState] = useState(true);
 
-	const currentVideoInPlayState = props.videoCurrentPlay.currentVideoState;
-	const currentVideoInPlay = props.videoCurrentPlay.currentVideo;
-	const {currentVideoState, videosRelated} = props.videoCurrentPlay
+	const { playerState } = props;
+	const { currentVideoState } = props;
 
-	const playPauseEvent = () => {
-		return props.playVideo(!currentVideoInPlayState.playing);
+	const playPauseEvent = () => props.playVideo(!playerState.isPlaying);
+
+	const handleRelatedVideoSelect = video => props.changeCurrentVideo(video);
+
+	const handleTimeVideoProgress = time => setTimePlayer(time);
+
+	const handleVideoInformations = videoInfos =>
+		setVideoInPlayInfos(videoInfos);
+
+	const handleSeekingTime = time => setNewTimePlayer(time);
+
+	const handleVolumeChange = time => props.changeVolume(time);
+
+	const handleMouseLeave = () =>
+		playerState.isPlaying && setShowVideoTool(false);
+
+	const handleMouseMove = () => {
+		setShowVideoTool(true);
+		!isMouseMoving && setTimeout(() => setShowVideoTool(false), 300);
 	};
-	const handleRelatedVideoSelect = video => {
-		return props.changeCurrentVideo(video);
-	};
-	const handleTimeVideoProgress = time => {
-		return setTimePlayer(time);
-	};
-	const handleVideoInformations = videoInfos => {
-		return setVideoInPlayInfos(videoInfos);
-	};
-	const handleSeekingTime = time => {
-		return setNewTimePlayer(time);
-	};
-	const handleVolumeChange = time => {
-		return props.changeVolume(time);
-	};
+
 	const handleFullScreen = () => {
-		if (playerRef.current){
-			if (!currentVideoState.fullScreen) {
-				playerRef.current.requestFullscreen();
+		if (playerRef.current) {
+			if (playerState.isFullScreen) {
+				if (document.fullscreenElement !== null) document.exitFullscreen();
 			} else {
-				if(document.fullscreenElement !== null) document.exitFullscreen(); 
+				playerRef.current.requestFullscreen();
 			}
 		}
-		return  props.toggleFullScreen(currentVideoState.fullScreen)
-	}
-
+		return props.toggleFullScreen(playerState.isFullScreen);
+	};
 
 	return (
-		<div ref={playerRef} className='video_player_container'>
+		<div
+			className='video_player_container'
+			ref={playerRef}
+			onMouseLeave={handleMouseLeave}
+			onMouseMove={handleMouseMove}>
 			<VideoInPlay
-				src={currentVideoInPlay.url}
+				src={currentVideoState.videoPlaying.url}
 				clickEvent={playPauseEvent}
-				playPause={currentVideoInPlayState.playing}
+				playPause={playerState.isPlaying}
 				timeEvent={handleTimeVideoProgress}
 				loadedVideoEvent={handleVideoInformations}
 				timePosition={timePlayer}
 				newTimePosition={newTimePlayer}
-				volumeChange={currentVideoInPlayState.volume}
 				fullScreenState={currentVideoState.fullScreen}
+				volumeChange={playerState.volume}
 			/>
+			{}
 			<VideoTools
-				playPause={currentVideoInPlayState.playing}
+				playPause={playerState.isPlaying}
 				playPauseEvent={playPauseEvent}
 				currentTime={timePlayer}
 				seekBarMax={videoInPlayInfos.duration}
 				seekingBarEvent={handleSeekingTime}
 				volumeChangeEvent={handleVolumeChange}
 				fullScreenEvent={handleFullScreen}
+				isShowed={isShowedVideoTool}
 			/>
 			<ListVideosPurpose
-				videosList={videosRelated}
+				videosList={currentVideoState.videosRelated}
 				videoSelectedEvent={handleRelatedVideoSelect}
-				show={!currentVideoInPlayState.playing}
+				show={!playerState.isPlaying}
 			/>
 		</div>
 	);
 }
 
 const mapStateToProps = state => ({
-	videoCurrentPlay: state.videoCurrentPlay
+	playerState: state.playerState,
+	currentVideoState: state.currentVideoState
 });
 
 const mapDispatchToProps = {

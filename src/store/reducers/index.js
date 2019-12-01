@@ -1,11 +1,12 @@
-import { combineReducers, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import videoPlayer from './_videoPlayerReducer';
+import { combineReducers, createStore } from 'redux';
+import playerState from './player/player.reducer';
+import currentVideoState from './currentVideo/currentVideo.reducer';
 
 // state and actions combiner
 export const allReducers = combineReducers({
-	videoCurrentPlay: videoPlayer
+	playerState,
+	currentVideoState
 });
 
 // initialize store
-export const store = createStore(allReducers, applyMiddleware(thunk));
+export const store = createStore(allReducers);

@@ -7,22 +7,21 @@ export default function VideoInPlay({
 	timeEvent,
 	loadedVideoEvent,
 	newTimePosition,
-	volumeChange,
+	volumeChange
 }) {
-
-	const [newTimePositionState, setNewTimePosition] = useState(0)
+	const [newTimePositionState, setNewTimePosition] = useState(0);
 
 	const videoRef = useRef();
 
-	if(videoRef.current){
+	if (videoRef.current) {
 		// Play/Pause event manager from parent
-		if(playPause === true){
-			videoRef.current.play()
-		}else{
-			videoRef.current.pause()
+		if (playPause === true) {
+			videoRef.current.play();
+		} else {
+			videoRef.current.pause();
 		}
 
-		// Seeking event local manager 
+		// Seeking event local manager
 		if (newTimePositionState !== newTimePosition) {
 			const timeToPlay = newTimePosition;
 			videoRef.current.currentTime = timeToPlay;
@@ -30,7 +29,6 @@ export default function VideoInPlay({
 		}
 
 		videoRef.current.volume = volumeChange / 100;
-
 	}
 
 	const handleClick = e => {
@@ -54,7 +52,6 @@ export default function VideoInPlay({
 		};
 		loadedVideoEvent(videoInformations);
 	};
-
 
 	return (
 		<div className='video_container'>
