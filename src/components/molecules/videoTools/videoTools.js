@@ -1,6 +1,6 @@
 import React from 'react';
 import VolumeRange from '../../atoms/volumeRange/volumeRange';
-import BtnPicto from '../../atoms/btnPicto/btnPicto';
+import Picto from '../../atoms/picto/picto';
 import { getPercentUnit } from '../../../helpers/helpers';
 
 export default function VideoTools({
@@ -10,8 +10,8 @@ export default function VideoTools({
 	seekingBarEvent,
 	currentTime,
 	fullScreenEvent,
-	fullscreen,
 	volumeChangeEvent,
+	isFullscreen,
 	isShowed
 }) {
 	// handle play
@@ -23,17 +23,18 @@ export default function VideoTools({
 	const fullScreenVideo = () => fullScreenEvent();
 
 	// handle change time position
-	const handleSeekingTime = e => {
-		seekingBarEvent(Number(e.target.value));
-	};
-
-	const seekValue = currTime => currTime;
-	const percent = currTime => getPercentUnit(seekValue(currTime), seekBarMax);
+	const handleSeekingTime = e => seekingBarEvent(Number(e.target.value));
+	
+	// get a percent 
+	const percent = currTime => getPercentUnit(currTime, seekBarMax);
+	
+	// method of changing volume for parent
 	const changeVolumeEvent = e => volumeChangeEvent(e);
 
 	// toggler of name and picto of button
 	const playerLabel = playerstate => (playerstate ? 'pause' : 'play');
-	console.log('isShowed : ', isShowed);
+
+	console.log(isFullscreen)
 	return (
 		<div
 			className={`tool_bar_video_container ${isShowed ? 'show' : 'hidden'}`}>
@@ -53,7 +54,7 @@ export default function VideoTools({
 					/>
 				</div>
 				<div className='left_container'>
-					<BtnPicto
+					<Picto
 						pictoName={playerLabel(playPause)}
 						clickCallBack={playVideo}
 						alt={`${playerLabel(playPause)} video`}
@@ -61,8 +62,8 @@ export default function VideoTools({
 					<VolumeRange volumeChangeEvent={changeVolumeEvent} />
 				</div>
 				<div className='right_container'>
-					<BtnPicto
-						pictoName='fullscreen'
+					<Picto
+						pictoName={isFullscreen ? 'fullscreen_minimize' : 'fullscreen'}
 						clickCallBack={fullScreenVideo}
 						alt='fullscreen'
 					/>

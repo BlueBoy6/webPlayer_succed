@@ -1,4 +1,6 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+
 import { connect } from 'react-redux';
 import VideoInPlay from '../../atoms/videoInPlay/videoInPlay';
 import VideoTools from '../../molecules/videoTools/videoTools';
@@ -81,6 +83,7 @@ function VideoPlayer(props) {
 				seekingBarEvent={handleSeekingTime}
 				volumeChangeEvent={handleVolumeChange}
 				fullScreenEvent={handleFullScreen}
+				isFullscreen={playerState.isFullScreen}
 				isShowed={isShowedVideoTool}
 			/>
 			<ListVideosPurpose
@@ -102,6 +105,16 @@ const mapDispatchToProps = {
 	playVideo,
 	changeVolume,
 	toggleFullScreen
+};
+
+VideoPlayer.propTypes = {
+	playerState: PropTypes.object.isRequired,
+	currentVideoState: PropTypes.object.isRequired,
+	changeCurrentVideo: PropTypes.func.isRequired,
+	playVideo: PropTypes.func.isRequired,
+	changeVolume: PropTypes.func.isRequired,
+	toggleFullScreen: PropTypes.func.isRequired,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoPlayer);

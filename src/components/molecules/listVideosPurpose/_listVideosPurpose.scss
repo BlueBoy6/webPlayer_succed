@@ -55,7 +55,6 @@
 			border-radius: 4px;
 			min-height: 100px;
 			z-index: 9;
-			background-size: 100%;
 			background-position: 50% 50%;
 			opacity: 0;
 			transform: translateY(30px);
@@ -63,6 +62,21 @@
 			cursor: auto;
 			pointer-events: none;
 			box-shadow: 0px 0px 10px 0px rgba(52, 232, 158, 0.25);
+			@include media-min('phone'){
+				background-size: auto 100%;
+			}
+			@include media-min('laptop'){
+				background-size: 100% auto;
+			}
+			&:hover {
+				@include media-min('phone'){
+					background-size: auto 110%;
+				}
+				@include media-min('laptop'){
+					background-size: 110% auto;
+				}
+				transition: 0.3s ease-in-out;
+			}
 
 			&:before {
 				content: '';
@@ -78,10 +92,6 @@
 					rgba(0, 0, 0, 0.7),
 					rgba(0, 0, 0, 0)
 				);
-			}
-			&:hover {
-				background-size: 110%;
-				transition: 0.3s ease-in-out;
 			}
 
 			h2 {
