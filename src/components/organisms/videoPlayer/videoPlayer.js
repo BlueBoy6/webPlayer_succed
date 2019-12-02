@@ -20,7 +20,6 @@ function VideoPlayer(props) {
 	const [timePlayer, setTimePlayer] = useState(0);
 	const [newTimePlayer, setNewTimePlayer] = useState(0);
 	const [isShowedVideoTool, setShowVideoTool] = useState(true);
-	const [isMouseMoving, setMouseMovingState] = useState(true);
 
 	const { playerState } = props;
 	const { currentVideoState } = props;
@@ -43,9 +42,13 @@ function VideoPlayer(props) {
 
 	const handleMouseMove = () => {
 		setShowVideoTool(true);
-		!isMouseMoving && setTimeout(() => setShowVideoTool(false), 300);
+		window.clearTimeout(timeoutDisplayVideoTool)
+		return timeoutDisplayVideoTool(playerState.isPlaying)
 	};
-
+	
+	const timeoutDisplayVideoTool = isPlaying => isPlaying && setTimeout(() => setShowVideoTool(false), 3000);
+	
+	
 	const handleFullScreen = () => {
 		if (playerRef.current) {
 			if (playerState.isFullScreen) {
@@ -59,10 +62,11 @@ function VideoPlayer(props) {
 
 	return (
 		<div
-			className='video_player_container'
+			className={`video_player_container ${playerState.isPlaying ? 'pointerShowed' : ''}`}
 			ref={playerRef}
 			onMouseLeave={handleMouseLeave}
 			onMouseMove={handleMouseMove}>
+
 			<VideoInPlay
 				src={currentVideoState.videoPlaying.url}
 				clickEvent={playPauseEvent}
@@ -73,8 +77,8 @@ function VideoPlayer(props) {
 				newTimePosition={newTimePlayer}
 				fullScreenState={currentVideoState.fullScreen}
 				volumeChange={playerState.volume}
-			/>
-			{}
+				/>
+
 			<VideoTools
 				playPause={playerState.isPlaying}
 				playPauseEvent={playPauseEvent}
@@ -85,12 +89,14 @@ function VideoPlayer(props) {
 				fullScreenEvent={handleFullScreen}
 				isFullscreen={playerState.isFullScreen}
 				isShowed={isShowedVideoTool}
-			/>
+				/>
+
 			<ListVideosPurpose
 				videosList={currentVideoState.videosRelated}
 				videoSelectedEvent={handleRelatedVideoSelect}
-				show={!playerState.isPlaying}
-			/>
+				isShowed={!playerState.isPlaying}
+				/>
+
 		</div>
 	);
 }
@@ -110,6 +116,7 @@ const mapDispatchToProps = {
 VideoPlayer.propTypes = {
 	playerState: PropTypes.object.isRequired,
 	currentVideoState: PropTypes.object.isRequired,
+
 	changeCurrentVideo: PropTypes.func.isRequired,
 	playVideo: PropTypes.func.isRequired,
 	changeVolume: PropTypes.func.isRequired,

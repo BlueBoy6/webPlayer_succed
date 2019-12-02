@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function ListVideosPurpose({ videosList, videoSelectedEvent, show }) {
+export default function ListVideosPurpose({ videosList, videoSelectedEvent, isShowed }) {
 	const handleSelectVideo = video => {
 		
 		return videoSelectedEvent(video);
 	};
 
 	return (
-		<div className={`videos_lists_container ${show ? 'show' : ''}`}>
+		<div className={`videos_lists_container ${isShowed ? 'show' : ''}`}>
 			<div className="videos_lists">
 				{videosList.map(video => {
 					return (
@@ -29,5 +29,7 @@ export default function ListVideosPurpose({ videosList, videoSelectedEvent, show
 }
 
 ListVideosPurpose.propTypes = {
-	videosList: PropTypes.array.isRequired
+	videosList: PropTypes.array.isRequired,
+	videoSelectedEvent: PropTypes.func.isRequired,
+	isShowed: PropTypes.bool.isRequired
 };

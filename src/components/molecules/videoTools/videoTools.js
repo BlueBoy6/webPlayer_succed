@@ -34,7 +34,6 @@ export default function VideoTools({
 	// toggler of name and picto of button
 	const playerLabel = playerstate => (playerstate ? 'pause' : 'play');
 
-	console.log(isFullscreen)
 	return (
 		<div
 			className={`tool_bar_video_container ${isShowed ? 'show' : 'hidden'}`}>
