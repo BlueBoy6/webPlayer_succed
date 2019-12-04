@@ -1,24 +1,29 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import Picto from './picto';
 
 
 describe('<Picto/> Component', () =>{
 
 	let wrapper,
+	wrapperMounted,
 	spy;
 
 	beforeEach(() => {
 		spy = jest.fn()
-		wrapper = shallow(<Picto pictoName='play' clickCallBack={spy} label='click here'/>);
+		wrapper = shallow(<Picto pictoName='play' clickEvent={spy} alt='click here'/>);
+		wrapperMounted = mount(<Picto pictoName='play' clickEvent={spy} alt='click here'/>);
 	});
 
-	it('#1 : Btn container was rended', () => {
+	it('#1 : Picto container was rended', () => {
 	  	expect(wrapper.find('.picto_container').length).toEqual(1);
 	});
+	it('#1.1 : Picto was rended', () => {
+	  	expect(wrapper.find('.picto').length).toEqual(1);
+	});
 	
-	it('#2 : Btn callback event called"', () => {
-		wrapper.find('.picto').simulate('click');
+	it('#2 : Picto callback event called"', () => {
+		wrapperMounted.find('.picto').simulate('click');
 		expect(spy).toHaveBeenCalled()
 	});
 	
@@ -32,10 +37,6 @@ describe('<Picto/> Component', () =>{
 	});
 
 	it('#5 : it must render a good picto url', () => {
-		expect(wrapper.find('.picto_container img').prop('src')).toEqual('/pictos/play.png');
-	});
-
-	it('#6 : Nothing rended if pictoName is not rended', () => {
 		expect(wrapper.find('.picto_container img').prop('src')).toEqual('/pictos/play.png');
 	});
 });

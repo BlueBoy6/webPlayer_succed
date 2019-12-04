@@ -102,8 +102,8 @@ function VideoPlayer(props) {
 }
 
 const mapStateToProps = state => ({
-	playerState: state.playerState,
-	currentVideoState: state.currentVideoState
+	playerState: state.playerReducer,
+	currentVideoState: state.currentVideoReducer
 });
 
 const mapDispatchToProps = {

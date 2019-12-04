@@ -1,11 +1,11 @@
 import { combineReducers, createStore } from 'redux';
-import playerState from './player/player.reducer';
-import currentVideoState from './currentVideo/currentVideo.reducer';
+import { playerReducer } from './player/player.reducer';
+import { currentVideoReducer } from './currentVideo/currentVideo.reducer';
 
 // state and actions combiner
 export const allReducers = combineReducers({
-	playerState,
-	currentVideoState
+	playerReducer,
+	currentVideoReducer
 });
 
 // initialize store

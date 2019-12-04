@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { store } from '../../../store/reducers/index';
 
 import VideoPlayer from './videoPlayer';
@@ -13,7 +12,7 @@ describe('<VideoPlayer /> Component', () => {
 	
 	it('#1 : expect that the component is mounted', () => {
 		expect(wrapper.find('.video_player_container').length).toEqual(1);
-	 });
+	});
 	 
 	it('#2 : expect that the video player component is mounted', () => {
 		expect(wrapper.find(VideoInPlay).length).toEqual(1);

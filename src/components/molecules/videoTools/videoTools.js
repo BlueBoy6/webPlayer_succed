@@ -15,7 +15,7 @@ export default function VideoTools({
 	isShowed
 }) {
 	// handle play
-	const playVideo = () => {
+	const handlePlayPauseVideo = () => {
 		playPauseEvent();
 	};
 
@@ -55,7 +55,7 @@ export default function VideoTools({
 				<div className='left_container'>
 					<Picto
 						pictoName={playerLabel(playPause)}
-						clickCallBack={playVideo}
+						clickEvent={handlePlayPauseVideo}
 						alt={`${playerLabel(playPause)} video`}
 					/>
 					<VolumeRange volumeChangeEvent={changeVolumeEvent} />
@@ -63,7 +63,7 @@ export default function VideoTools({
 				<div className='right_container'>
 					<Picto
 						pictoName={isFullscreen ? 'fullscreen_minimize' : 'fullscreen'}
-						clickCallBack={fullScreenVideo}
+						clickEvent={fullScreenVideo}
 						alt='fullscreen'
 					/>
 				</div>

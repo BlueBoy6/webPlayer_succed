@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Picto({ pictoName, clickCallBack, alt }) {
+export default function Picto({ pictoName, clickEvent, alt }) {
 	function pictoSetter(picto) {
 		switch (picto) {
 			case 'play':
@@ -22,14 +22,12 @@ export default function Picto({ pictoName, clickCallBack, alt }) {
 	}
 
 	// handle click event and launch callback here
-	const handleClick = e => clickCallBack(e);
+	const handleClick = e => clickEvent(e);
 
 	if (pictoName !== undefined || pictoName.length !== 0) {
 		return (
 			<div className='picto_container'>
-				<div className='picto' onClick={handleClick}>
-					<img src={pictoSetter(pictoName)} alt={alt} className='picto' />
-				</div>
+				<img src={pictoSetter(pictoName)} alt={alt} className='picto' onClick={handleClick}/>
 			</div>
 		);
 	} else {
@@ -39,6 +37,6 @@ export default function Picto({ pictoName, clickCallBack, alt }) {
 
 Picto.propTypes = {
 	pictoName: PropTypes.string.isRequired,
-	clickCallBack: PropTypes.func,
+	clickEvent: PropTypes.func,
 	alt: PropTypes.string
 };

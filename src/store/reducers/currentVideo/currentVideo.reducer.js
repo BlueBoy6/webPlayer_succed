@@ -31,12 +31,12 @@ const videosRelated = [
 	}
 ];
 
-const currentVideo = {
+export const currentVideoState = {
 	videoPlaying: videosRelated[2],
 	videosRelated: videosRelated
 };
 
-export default function(state = currentVideo, action) {
+export function currentVideoReducer(state = currentVideoState, action) {
 	switch (action.type) {
 		case CHANGE_VIDEO:
 			return { ...state, videoPlaying: action.payload };

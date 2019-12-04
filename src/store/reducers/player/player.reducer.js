@@ -4,14 +4,13 @@ import {
 	TOGGLE_FULLSCREEN
 } from '../../actions/types';
 
-const playerState = {
+export const currentPlayerState = {
+	volume: 25,
 	isPlaying: false,
-	timer: 0,
-	volume: 0,
 	isFullScreen: false
 };
 
-export default function(state = playerState, action) {
+export function playerReducer(state = currentPlayerState, action) {
 	switch (action.type) {
 		case TOGGLE_FULLSCREEN:
 			return { ...state, isFullScreen: !action.payload };
