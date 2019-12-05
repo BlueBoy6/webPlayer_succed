@@ -5,6 +5,7 @@
 	width: 100vw;
 	height: 100vh;
 	overflow: hidden;
+	cursor: none;
 	& > .video_container {
 		background: #141414;
 		width: 100%;
@@ -21,5 +22,8 @@
 	& > .tool_bar_video_container {
 		position: absolute;
 		bottom: 5%;
+	}
+	&.pointerShowed{
+		cursor: auto;
 	}
 }

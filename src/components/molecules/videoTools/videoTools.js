@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import VolumeRange from '../../atoms/volumeRange/volumeRange';
 import Picto from '../../atoms/picto/picto';
 import { getPercentUnit } from '../../../helpers/helpers';
@@ -10,10 +12,12 @@ export default function VideoTools({
 	seekingBarEvent,
 	currentTime,
 	fullScreenEvent,
+	volume,
 	volumeChangeEvent,
 	isFullscreen,
 	isShowed
 }) {
+
 	// handle play
 	const handlePlayPauseVideo = () => {
 		playPauseEvent();
@@ -58,7 +62,7 @@ export default function VideoTools({
 						clickEvent={handlePlayPauseVideo}
 						alt={`${playerLabel(playPause)} video`}
 					/>
-					<VolumeRange volumeChangeEvent={changeVolumeEvent} />
+					<VolumeRange volume={volume} volumeChangeEvent={changeVolumeEvent} />
 				</div>
 				<div className='right_container'>
 					<Picto
@@ -71,3 +75,16 @@ export default function VideoTools({
 		</div>
 	);
 }
+
+VideoTools.propTypes = {
+	playPause: PropTypes.bool.isRequired,
+	playPauseEvent: PropTypes.func.isRequired ,
+	seekBarMax: PropTypes.number.isRequired,
+	seekingBarEvent: PropTypes.func.isRequired,
+	currentTime: PropTypes.number.isRequired,
+	fullScreenEvent: PropTypes.func.isRequired,
+	volume: PropTypes.number.isRequired,
+	volumeChangeEvent: PropTypes.func.isRequired ,
+	isFullscreen: PropTypes.bool.isRequired ,
+	isShowed: PropTypes.bool.isRequired,
+};

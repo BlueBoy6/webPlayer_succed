@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { currentPlayerState } from '../../../store/reducers/player';
+import { currentPlayerState } from '../../../store/reducers/player/player.reducer';
 import VideoTools from './videoTools';
 
 
@@ -26,6 +26,7 @@ describe('<VideoTools /> Component', () =>{
 			currentTime={timePlayer}
 			seekBarMax={videoInfos.duration}
 			seekingBarEvent={handleSeekingTime}
+			volume={currentPlayerState.volume}
 			volumeChangeEvent={handleVolumeChange}
 			fullScreenEvent={handleFullScreen}
 			isFullscreen={currentPlayerState.isFullScreen}

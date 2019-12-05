@@ -11,7 +11,7 @@ export const currentPlayerState = {
 };
 
 export function playerReducer(state = currentPlayerState, action) {
-	switch (action.type) {
+	switch (action.type) {ya
 		case TOGGLE_FULLSCREEN:
 			return { ...state, isFullScreen: !action.payload };
 		case VOLUME_CHANGE:

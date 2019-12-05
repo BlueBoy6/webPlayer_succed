@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 export default function VideoInPlay({
 	src,
@@ -12,24 +13,25 @@ export default function VideoInPlay({
 	const [newTimePositionState, setNewTimePosition] = useState(0);
 
 	const videoRef = useRef();
-
-	if (videoRef.current) {
-		// Play/Pause event manager from parent
-		if (playPause === true) {
-			videoRef.current.play();
-		} else {
-			videoRef.current.pause();
+	useEffect(() => {
+		if (videoRef.current) {
+			// Play/Pause event manager from parent
+			if (playPause === true) {
+				videoRef.current.play();
+			} else {
+				videoRef.current.pause();
+			}
+	
+			// Seeking event local manager
+			if (newTimePositionState !== newTimePosition) {
+				const timeToPlay = newTimePosition;
+				videoRef.current.currentTime = timeToPlay;
+				setNewTimePosition(timeToPlay);
+			}
+	
+			videoRef.current.volume = volumeChange / 100;
 		}
-
-		// Seeking event local manager
-		if (newTimePositionState !== newTimePosition) {
-			const timeToPlay = newTimePosition;
-			videoRef.current.currentTime = timeToPlay;
-			setNewTimePosition(timeToPlay);
-		}
-
-		videoRef.current.volume = volumeChange / 100;
-	}
+	}, [newTimePosition, newTimePositionState, playPause, volumeChange])
 
 	const handleClick = e => {
 		if (videoRef.current.paused) {
@@ -41,7 +43,7 @@ export default function VideoInPlay({
 		}
 	};
 
-	const timeUpdateEvent = e => {
+	const handleTimeUpdate = e => {
 		const currentTime = e.target.currentTime;
 		return timeEvent(currentTime);
 	};
@@ -56,12 +58,24 @@ export default function VideoInPlay({
 	return (
 		<div className='video_container'>
 			<video
+				className="video_player"
 				ref={videoRef}
 				src={src}
 				onClick={handleClick}
 				onLoadedData={handleLoaded}
-				onTimeUpdate={timeUpdateEvent}
+				onTimeUpdate={handleTimeUpdate}
 			/>
 		</div>
 	);
 }
+
+VideoInPlay.propTypes = {
+	src: PropTypes.string.isRequired,
+	playPause: PropTypes.bool.isRequired,
+	newTimePosition: PropTypes.number.isRequired,
+	volumeChange: PropTypes.number.isRequired,
+
+	clickEvent: PropTypes.func.isRequired,
+	timeEvent: PropTypes.func.isRequired,
+	loadedVideoEvent: PropTypes.func.isRequired,
+};
